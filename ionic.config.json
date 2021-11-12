@@ -1,0 +1,7 @@
+{
+  "name": "KISs",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
