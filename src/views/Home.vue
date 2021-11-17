@@ -1,16 +1,9 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content :fullscreen="true">  
       <ion-img class="logoTop" :src="logo.src" ></ion-img>
-      <div v-on:loved="sayHello" id="dating-card-container">
-        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile.png" name="Andrass" age="63"></DatingCard>
-        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile3.png" name="1n3rn3t Gr4ndm4" age=""></DatingCard>
-        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile2.png" name="Pappy-plier" age="59"></DatingCard>
+      <div id="dating-card-container">
+        <DatingCard v-for="card in cards" :key="card" class="datingCard" ref="datingCard" :profileImage="card.profileImage" :name="card.name" :age="card.age"></DatingCard>
       </div>
     </ion-content>
   </ion-page>
@@ -25,31 +18,41 @@ import DatingCard from '@/components/DatingCard.vue';
 export default {
   name: 'Home',
   components: { DatingCard, IonContent, IonPage, IonImg },
-  data() {
-    const logo = {
-      'text': 'Logo',
-      'src': './assets/icon/icon-transparent.png'
-    };
-    return {
-      logo
-    }
-  },
+  data: () => ({
+    logo: {
+    'text': 'Logo',
+    'src': './assets/icon/icon-transparent.png'
+    },
+    showLess: true,
+    cards: [
+      {name:'Andras', age:'63', profileImage:'./assets/example/date-profile.png'},
+      {name:'1nt3rn3t Gr4ndm4', age:'89', profileImage:'./assets/example/date-profile3.png'},
+      {name:'Pappy-plier', age:'59', profileImage:'./assets/example/date-profile2.png'}
+    ]
+  }),
   methods: {
-    sayHello: () => {
-        console.log('Hello World 🍑')
-        console.log(this);
+    addCard() {
+      const cards = [
+        {name:'Andras', age:'63', profileImage:'./assets/example/date-profile.png'},
+        {name:'1nt3rn3t Gr4ndm4', age:'89', profileImage:'./assets/example/date-profile3.png'},
+        {name:'Pappy-plier', age:'59', profileImage:'./assets/example/date-profile2.png'},
+        {name:'Deus', age: '∞', profileImage: 'https://st4.depositphotos.com/13194036/21478/i/600/depositphotos_214785028-stock-photo-low-angle-view-of-jesus.jpg'},
+        {name:'Shrek', age: '143', profileImage: 'https://pics.me.me/faceapp-old-shrek-wildin-61004485.png'},
+        {name:'Gerald', age:'98', profileImage:'https://sm.ign.com/t/ign_fr/news/t/the-witche/the-witcher-how-old-is-geralt-when-the-show-begins_c57b.h720.jpg'},
+        {name:'Louis XV', age:'311', profileImage:'https://www.histoire-pour-tous.fr/images/articles/dossiers/biographies/louisxv-delatour.jpg'},
+        {name:'Cthulhu', age:'430M', profileImage:'https://cdnb.artstation.com/p/assets/images/images/035/666/837/large/andree-wallin-1117-2.jpg'}
+      ]
+      this.cards.push(cards[Math.floor(Math.random()*cards.length)])
     }
   },
-  mounted: function mounted () {
+  mounted() {
     const MAX_TRANSLATE = 800;
-
+    const vm = this;
 
     const getCardRef = () => {
       let cardRef = null;
-      cardRef = document.querySelector(".datingCard")
-      cardRef.classList.add("focusedCard")
-      console.log(cardRef);
-      return cardRef
+      cardRef = document.querySelector(".datingCard");
+      if (cardRef) {return cardRef}
     }
 
     function initNewCard(elem) {
@@ -64,7 +67,11 @@ export default {
       const cardAnimation = createAnimation()
         .addElement(elem)
         .duration(350)
-        .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)`)
+        .keyframes([
+          { offset: 0, transform: 'translate(0, 0) rotate(0deg)' },
+          { offset: 0.2, transform: `translate(${MAX_TRANSLATE/5}px, -${200/5}px) rotate(${25/5}deg)` },
+          { offset: 1, transform: `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)` }
+        ])
 
 
       const onMove = (ev) => {
@@ -100,6 +107,8 @@ export default {
                   if (shouldComplete) {
                     if (elem) {
                       elem.remove();
+                      vm.cards.shift();
+                      vm.addCard();
                       initNewCard(getCardRef())
                     }
                   }
@@ -115,6 +124,8 @@ export default {
               cardGesture.enable(true);
               if (elem) {
                 elem.remove();
+                vm.cards.shift();
+                vm.addCard();
                 initNewCard(getCardRef())
               }
           });
@@ -146,15 +157,21 @@ export default {
   flex-direction: column;
 }
 
+.datingCard {
+  transition: 0.3s ease-out;
+}
+
 .datingCard:nth-child(1) {
   z-index: 3;
 }
 
 .datingCard:nth-child(2) {
   z-index: 2;
+  transform: scale(0.9) translateY(50px);
 }
 
 .datingCard:nth-child(3) {
   z-index: 1;
+  transform: scale(0.8) translateY(110px);
 }
 </style>

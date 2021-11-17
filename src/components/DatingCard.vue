@@ -18,11 +18,12 @@
 </template>
 
 <script>
-//import { createGesture, createAnimation } from '@ionic/vue';
+import { IonIcon } from '@ionic/vue';
 import { heart } from 'ionicons/icons';
 
 export default ({
     name: 'DatingCard',
+    components: { IonIcon },
     props: {
         profileImage: {
             type: String,
@@ -33,7 +34,7 @@ export default ({
             required: true
         },
         age: {
-            type: Number,
+            type: String,
             required: true
         }
     },
