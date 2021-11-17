@@ -9,7 +9,8 @@
       <ion-img class="logoTop" :src="logo.src" ></ion-img>
       <div id="dating-card-container">
         <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile.png" name="Andrass" age="63"></DatingCard>
-        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile.png" name="Andras" age="63"></DatingCard>
+        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile3.png" name="1n3rn3t Gr4ndm4" age="83"></DatingCard>
+        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile2.png" name="Pappy-plier" age="59"></DatingCard>
       </div>
     </ion-content>
   </ion-page>
@@ -38,73 +39,76 @@ export default {
   mounted: function mounted () {
     const MAX_TRANSLATE = 800;
 
-    let cardRef: any = null;
 
     const getCardRef = () => {
+      let cardRef: any = null;
       cardRef = document.querySelector(".datingCard")
       cardRef.classList.add("focusedCard")
       console.log(cardRef);
+      return cardRef
     }
 
-    getCardRef()
-    
-    let started = false;
+    function initNewCard(elem: any) {
+      if (!elem) {return}
+      let started = false;
 
-    if (!cardRef) {return}
-
-    const getStep = (ev: any) => {
-      // clamp
-      return Math.max(0, Math.min(ev.deltaX / MAX_TRANSLATE, 1));
-    }
-
-    const cardAnimation = createAnimation()
-      .addElement(cardRef)
-      .duration(350)
-      .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)`)
-
-
-    const onMove = (ev: any) => {
-      if (!started) {
-          cardAnimation.progressStart();
-          started = true;
+      const getStep = (ev: any) => {
+        // clamp
+        return Math.max(0, Math.min(ev.deltaX / MAX_TRANSLATE, 1));
       }
 
-      cardAnimation.progressStep(getStep(ev));
-    }
+      const cardAnimation = createAnimation()
+        .addElement(elem)
+        .duration(350)
+        .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)`)
 
-    const cardGesture = createGesture({
-      el: cardRef,
-      threshold: 0,
-      gestureName: 'card-gesture',
-      onMove: ev => onMove(ev),
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      onEnd: ev => onEnd(ev)
-    });
 
-    const onEnd = (ev: any) => {
-        if (!started) { return; }
+      const onMove = (ev: any) => {
+        if (!started) {
+            cardAnimation.progressStart();
+            started = true;
+        }
 
-        cardGesture.enable(false);
+        cardAnimation.progressStep(getStep(ev));
+      }
 
-        const step = getStep(ev);
-        const shouldComplete = step > 0.2;
+      const cardGesture = createGesture({
+        el: elem,
+        threshold: 0,
+        gestureName: 'card-gesture',
+        onMove: ev => onMove(ev),
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        onEnd: ev => onEnd(ev)
+      });
 
-        cardAnimation
-            .progressEnd((shouldComplete) ? 1 : 0, step)
-            .onFinish(() =>{
-                cardGesture.enable(true);
-                if (shouldComplete) {
-                  if (cardRef) {
-                    cardRef.remove();
-                    getCardRef()
+      const onEnd = (ev: any) => {
+          if (!started) { return; }
+
+          cardGesture.enable(false);
+
+          const step = getStep(ev);
+          const shouldComplete = step > 0.2;
+
+          cardAnimation
+              .progressEnd((shouldComplete) ? 1 : 0, step)
+              .onFinish(() =>{
+                  cardGesture.enable(true);
+                  if (shouldComplete) {
+                    if (elem) {
+                      elem.remove();
+                      initNewCard(getCardRef())
+                    }
                   }
-                }
-            });
+              });
 
-        started = false;
+          started = false;
+      }
+
+      cardGesture.enable(true);
     }
-
-    cardGesture.enable(true);
+    
+    initNewCard(getCardRef());
+    
   }
 }
 
@@ -120,7 +124,21 @@ export default {
   top: 10px;
   margin: auto;
 }
-.focusedCard {
+
+#dating-card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.datingCard:nth-child(1) {
+  z-index: 3;
+}
+
+.datingCard:nth-child(2) {
   z-index: 2;
+}
+
+.datingCard:nth-child(3) {
+  z-index: 1;
 }
 </style>

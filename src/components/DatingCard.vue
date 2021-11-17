@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-//import { createGesture, createAnimation } from '@ionic/vue';
+import { createGesture, createAnimation } from '@ionic/vue';
 import { heart } from 'ionicons/icons';
 
 
@@ -42,64 +42,78 @@ export default ({
         return {
             heart
         }
-    }/*,
-    mounted() {
-    const MAX_TRANSLATE = 800;
-    const cardRef = document.querySelectorAll(".datingCard")[0];
-    let started = false;
+    },
+    mounted() {/*
+        const MAX_TRANSLATE = 800;
 
-    const clamp = (min: number, n: number, max: number) => {
-        return Math.max(min, Math.min(n, max));
-    };
+        let cardRef: any = null;
 
-    const getStep = (ev: any) => {
-        return clamp(0, ev.deltaX / MAX_TRANSLATE, 1);
+        const getCardRef = () => {
+        cardRef = document.querySelector(".card-container")
+        //cardRef.classList.add("focusedCard")
+        console.log(cardRef);
+        }
+
+        getCardRef()
+        
+        let started = false;
+
+        if (!cardRef) {return}
+
+        const getStep = (ev: any) => {
+        // clamp
+        return Math.max(0, Math.min(ev.deltaX / MAX_TRANSLATE, 1));
+        }
+
+        const cardAnimation = createAnimation()
+        .addElement(cardRef)
+        .duration(350)
+        .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)`)
+
+
+        const onMove = (ev: any) => {
+        if (!started) {
+            cardAnimation.progressStart();
+            started = true;
+        }
+
+        cardAnimation.progressStep(getStep(ev));
+        }
+
+        const cardGesture = createGesture({
+        el: cardRef,
+        threshold: 0,
+        gestureName: 'card-gesture',
+        onMove: ev => onMove(ev),
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        onEnd: ev => onEnd(ev)
+        });
+
+        const onEnd = (ev: any) => {
+            if (!started) { return; }
+
+            cardGesture.enable(false);
+
+            const step = getStep(ev);
+            const shouldComplete = step > 0.2;
+
+            cardAnimation
+                .progressEnd((shouldComplete) ? 1 : 0, step)
+                .onFinish(() =>{
+                    cardGesture.enable(true);
+                    if (shouldComplete) {
+                    if (cardRef) {
+                        cardRef.remove();
+                        getCardRef()
+                    }
+                    }
+                });
+
+            started = false;
+        }
+
+        cardGesture.enable(true);*/
     }
-
-    const cardAnimation = createAnimation()
-    .addElement(cardRef)
-    .duration(350)
-    .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, ${0}px) rotate(25deg)`)
-
-
-    const onMove = (ev: any) => {
-    if (!started) {
-        cardAnimation.progressStart();
-        started = true;
-    }
-
-    cardAnimation.progressStep(getStep(ev));
-    }
-
-    const cardGesture = createGesture({
-    el: cardRef,
-    threshold: 0,
-    gestureName: 'card-gesture',
-    onMove: ev => onMove(ev),
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    onEnd: ev => onEnd(ev)
-    });
-
-    const onEnd = (ev: any) => {
-        if (!started) { return; }
-
-        cardGesture.enable(false);
-
-        const step = getStep(ev);
-        const shouldComplete = step > 0.2;
-
-        cardAnimation
-            .progressEnd((shouldComplete) ? 1 : 0, step)
-            .onFinish(() =>{
-                cardGesture.enable(true);
-                cardRef.remove();
-            });
-
-        started = false;
-    }
-
-    cardGesture.enable(false);
-    }*/
 })
 </script>
 
