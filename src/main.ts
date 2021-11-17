@@ -8,8 +8,8 @@ import { IonicVue } from '@ionic/vue';
 import '@ionic/vue/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-/*import '@ionic/vue/css/normalize.css';
-import '@ionic/vue/css/structure.css';*/
+import '@ionic/vue/css/normalize.css';
+import '@ionic/vue/css/structure.css';
 import '@ionic/vue/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
@@ -23,6 +23,7 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/app.variables.css';
 import './theme/app.core.css';
+
 
 const app = createApp(App)
   .use(IonicVue)

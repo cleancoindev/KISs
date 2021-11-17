@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div class="card-container">
       <div class="card-content">
         <div class="profile-container">
             <div class="profile-image" name="profile" :style="'background-image: url(' + profileImage + ');'">
@@ -10,7 +10,7 @@
         </div>
         <div class="btnLove-container">
             <button class="btnLove">
-                <ion-icon class="btnLove-icon" :icon="heart"></ion-icon>
+                <ion-icon class="btnLove-icon" :src="heart"></ion-icon>
             </button>
         </div>
       </div>
@@ -18,7 +18,9 @@
 </template>
 
 <script lang="ts">
+//import { createGesture, createAnimation } from '@ionic/vue';
 import { heart } from 'ionicons/icons';
+
 
 export default ({
     name: 'DatingCard',
@@ -40,13 +42,69 @@ export default ({
         return {
             heart
         }
+    }/*,
+    mounted() {
+    const MAX_TRANSLATE = 800;
+    const cardRef = document.querySelectorAll(".datingCard")[0];
+    let started = false;
+
+    const clamp = (min: number, n: number, max: number) => {
+        return Math.max(min, Math.min(n, max));
+    };
+
+    const getStep = (ev: any) => {
+        return clamp(0, ev.deltaX / MAX_TRANSLATE, 1);
     }
 
+    const cardAnimation = createAnimation()
+    .addElement(cardRef)
+    .duration(350)
+    .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, ${0}px) rotate(25deg)`)
+
+
+    const onMove = (ev: any) => {
+    if (!started) {
+        cardAnimation.progressStart();
+        started = true;
+    }
+
+    cardAnimation.progressStep(getStep(ev));
+    }
+
+    const cardGesture = createGesture({
+    el: cardRef,
+    threshold: 0,
+    gestureName: 'card-gesture',
+    onMove: ev => onMove(ev),
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    onEnd: ev => onEnd(ev)
+    });
+
+    const onEnd = (ev: any) => {
+        if (!started) { return; }
+
+        cardGesture.enable(false);
+
+        const step = getStep(ev);
+        const shouldComplete = step > 0.2;
+
+        cardAnimation
+            .progressEnd((shouldComplete) ? 1 : 0, step)
+            .onFinish(() =>{
+                cardGesture.enable(true);
+                cardRef.remove();
+            });
+
+        started = false;
+    }
+
+    cardGesture.enable(false);
+    }*/
 })
 </script>
 
 <style scoped>
-#container {
+.card-container {
     position: absolute;
     width: 350px;
     height: 557px;
@@ -57,6 +115,11 @@ export default ({
     background: #FDFDFD;
     box-shadow: 0px 4px 18px rgba(111, 131, 139, 0.25);
     border-radius: 40px;
+    cursor: grab;
+}
+
+.card-container:active {
+    cursor: grabbing;
 }
 
 .card-content {
@@ -124,12 +187,20 @@ export default ({
     align-items: center;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(255, 104, 178, 0.35);
-    transition: 0.3s;
+}
+
+.btnLove, .btnLove-icon {
+    transition: 0.3s ease;
+}
+
+.btnLove-icon {
+    color: #FFFFFF;
 }
 
 .btnLove:active {
-    width: 85px;
-    height: 85px;
+    transform: scale(0.9);
+    /*width: 85px;
+    height: 85px;*/
     box-shadow: 0px 4px 8px rgba(255, 104, 178, 0.35);
 }
 
@@ -137,5 +208,10 @@ export default ({
     width: 55px;
     height: 55px;
     color: #FFFFFF;
+}
+
+.btnLove:active .btnLove-icon {
+    width: 50px;
+    height: 50px;
 }
 </style>

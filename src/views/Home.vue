@@ -1,39 +1,113 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Home</ion-title>
+      </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Home</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
+    <ion-content :fullscreen="true">  
       <ion-img class="logoTop" :src="logo.src" ></ion-img>
-
-      <div class="dating-card-container">
-        <DatingCard profileImage="./assets/example/date-profile.png" name="Andras" age="63"></DatingCard>
+      <div id="dating-card-container">
+        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile.png" name="Andrass" age="63"></DatingCard>
+        <DatingCard class="datingCard" ref="datingCard" profileImage="./assets/example/date-profile.png" name="Andras" age="63"></DatingCard>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg } from '@ionic/vue';
+import { createGesture, createAnimation, IonPage, IonContent, IonImg } from '@ionic/vue';
 
-import DatingCard from '@/components/DatingCard.vue'
+import DatingCard from '@/components/DatingCard.vue';
 
-export default  {
+
+export default {
   name: 'Home',
-  components: { DatingCard, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonImg },
+  components: { DatingCard, IonContent, IonPage, IonImg },
   setup() {
     const logo = {
       'text': 'Logo',
-      'src': './assets/icon/logo-transparent.png'
+      'src': './assets/icon/icon-transparent.png'
     };
-    return { logo }
+    return {
+      logo
+    }
+  },
+  methods: {
+  },
+  mounted: function mounted () {
+    const MAX_TRANSLATE = 800;
+
+    let cardRef: any = null;
+
+    const getCardRef = () => {
+      cardRef = document.querySelector(".datingCard")
+      cardRef.classList.add("focusedCard")
+      console.log(cardRef);
+    }
+
+    getCardRef()
+    
+    let started = false;
+
+    if (!cardRef) {return}
+
+    const getStep = (ev: any) => {
+      // clamp
+      return Math.max(0, Math.min(ev.deltaX / MAX_TRANSLATE, 1));
+    }
+
+    const cardAnimation = createAnimation()
+      .addElement(cardRef)
+      .duration(350)
+      .fromTo('transform', 'translate(0, 0) rotate(0deg)', `translate(${MAX_TRANSLATE}px, -200px) rotate(25deg)`)
+
+
+    const onMove = (ev: any) => {
+      if (!started) {
+          cardAnimation.progressStart();
+          started = true;
+      }
+
+      cardAnimation.progressStep(getStep(ev));
+    }
+
+    const cardGesture = createGesture({
+      el: cardRef,
+      threshold: 0,
+      gestureName: 'card-gesture',
+      onMove: ev => onMove(ev),
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      onEnd: ev => onEnd(ev)
+    });
+
+    const onEnd = (ev: any) => {
+        if (!started) { return; }
+
+        cardGesture.enable(false);
+
+        const step = getStep(ev);
+        const shouldComplete = step > 0.2;
+
+        cardAnimation
+            .progressEnd((shouldComplete) ? 1 : 0, step)
+            .onFinish(() =>{
+                cardGesture.enable(true);
+                if (shouldComplete) {
+                  if (cardRef) {
+                    cardRef.remove();
+                    getCardRef()
+                  }
+                }
+            });
+
+        started = false;
+    }
+
+    cardGesture.enable(true);
   }
 }
+
 </script>
 
 <style scoped>
@@ -45,5 +119,8 @@ export default  {
   right: 0;
   top: 10px;
   margin: auto;
+}
+.focusedCard {
+  z-index: 2;
 }
 </style>
