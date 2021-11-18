@@ -77,6 +77,10 @@ export default {
     padding: 7px 18px;
     border-radius: 3px;
     cursor: pointer;
+    transition: 0.3s;
+}
 
+.btn-talk:active {
+    transform: scale(0.95);
 }
 </style>

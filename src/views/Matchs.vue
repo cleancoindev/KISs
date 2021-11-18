@@ -6,9 +6,9 @@
       <div id="loved-box">
         <h1>Matchs</h1>
         <div class="loved-container">
-          <LovedCard name='1nt3rn3t Gr4ndm4' profileImage='./assets/example/date-profile3.png'></LovedCard>
-          <LovedCard name='Cthulhu' profileImage='https://cdnb.artstation.com/p/assets/images/images/035/666/837/large/andree-wallin-1117-2.jpg'></LovedCard>
-          <LovedCard name='Andras' profileImage='./assets/example/date-profile.png'></LovedCard>
+          <MatchCard name='1nt3rn3t Gr4ndm4' profileImage='./assets/example/date-profile3.png'></MatchCard>
+          <MatchCard name='Cthulhu' profileImage='https://cdnb.artstation.com/p/assets/images/images/035/666/837/large/andree-wallin-1117-2.jpg'></MatchCard>
+          <MatchCard name='Andras' profileImage='./assets/example/date-profile.png'></MatchCard>
         </div>
       </div>
     </ion-content>
@@ -17,11 +17,11 @@
 
 <script lang="ts">
 import { IonPage, IonHeader, IonContent } from '@ionic/vue';
-import LovedCard from '@/components/LovedCard.vue';
+import MatchCard from '@/components/MatchCard.vue';
 
 export default  {
   name: 'Maths',
-  components: { LovedCard, IonHeader, IonContent, IonPage }
+  components: { MatchCard, IonHeader, IonContent, IonPage }
 }
 </script>
 
