@@ -1,20 +1,22 @@
 <template>
   <div class="card-container">
-      <div class="card-content">
-        <div class="profile-container">
-            <div class="profile-image" name="profile" :style="'background-image: url(' + profileImage + ');'">
-                <div class="profile-name-container">
-                    <label for="profile">{{ name }}, {{ age }} yo</label>
+        <div class="card-content">
+            <div class="card-box">
+                <div class="profile-container">
+                    <div class="profile-image" name="profile" :style="'background-image: url(' + profileImage + ');'">
+                        <div class="profile-name-container">
+                            <label for="profile">{{ name }}, {{ age }} yo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="btnLove-container">
+                    <button class="btnLove">
+                        <ion-icon class="btnLove-icon" :src="heart"></ion-icon>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="btnLove-container">
-            <button class="btnLove">
-                <ion-icon class="btnLove-icon" :src="heart"></ion-icon>
-            </button>
-        </div>
-      </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -49,8 +51,8 @@ export default ({
 <style scoped>
 .card-container {
     position: absolute;
-    width: 350px;
-    height: 557px;
+    width: 325px;
+    height: 540px;
     left: 0;
     right: 0;
     top: 90px;
@@ -65,18 +67,24 @@ export default ({
     cursor: grabbing;
 }
 
-.card-content {
-    position: absolute;
+.card-box {
+    padding: 30px;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-flow: column;
     align-items: center;
+}
+
+.card-content {
+    width: 100%;
+    position: absolute;
     top: 0;
     bottom: 0;
-    margin: 30px;
 }
 
 .profile-container {
-    width: 290px;
+    width: 100%;
     min-height: 330px;
     border-radius: 25px;
     overflow: hidden;
@@ -84,7 +92,7 @@ export default ({
 
 .profile-image {
     width: 100%;
-    height: 100%;
+    height: 330px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -11,7 +11,7 @@
           <ion-icon :icon="chatbubbles" />
         </ion-tab-button>
         
-        <ion-tab-button tab="love" href="/tabs/love">
+        <ion-tab-button tab="matchs" href="/tabs/matchs">
           <ion-icon :icon="heart" />
         </ion-tab-button>
         

@@ -39,7 +39,7 @@ export default {
         {name:'Deus', age: '∞', profileImage: 'https://st4.depositphotos.com/13194036/21478/i/600/depositphotos_214785028-stock-photo-low-angle-view-of-jesus.jpg'},
         {name:'Shrek', age: '143', profileImage: 'https://pics.me.me/faceapp-old-shrek-wildin-61004485.png'},
         {name:'Gerald', age:'98', profileImage:'https://sm.ign.com/t/ign_fr/news/t/the-witche/the-witcher-how-old-is-geralt-when-the-show-begins_c57b.h720.jpg'},
-        {name:'Louis XV', age:'311', profileImage:'https://www.histoire-pour-tous.fr/images/articles/dossiers/biographies/louisxv-delatour.jpg'},
+        {name:'Louis XIV', age:'383', profileImage:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Louis_XIV_of_France.jpg/260px-Louis_XIV_of_France.jpg'},
         {name:'Cthulhu', age:'430M', profileImage:'https://cdnb.artstation.com/p/assets/images/images/035/666/837/large/andree-wallin-1117-2.jpg'}
       ]
       this.cards.push(cards[Math.floor(Math.random()*cards.length)])
