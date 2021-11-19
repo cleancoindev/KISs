@@ -74,7 +74,7 @@ export default {
 .btn-talk {
     background: var(--ion-color-primary);
     color: #FFFFFF;
-    padding: 7px 18px;
+    padding: 8px 22px;
     border-radius: 3px;
     cursor: pointer;
     transition: 0.3s;
