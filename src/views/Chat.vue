@@ -3,23 +3,32 @@
     <ion-header>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Chat</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <CommingSoon name="Chat page" />
+      <div class="page-box">
+        <h1>Messages</h1>
+        <div class="discussions-container">
+          <DiscussionCard name='Cthulhu' profileImage='https://cdnb.artstation.com/p/assets/images/images/035/666/837/large/andree-wallin-1117-2.jpg'></DiscussionCard>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import CommingSoon from '@/components/CommingSoon.vue';
+import { IonPage, IonHeader, IonContent } from '@ionic/vue';
+import DiscussionCard  from '@/components/DiscussionCard.vue'
 
 export default  {
   name: 'Chat',
-  components: { CommingSoon, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonHeader, IonContent, IonPage, DiscussionCard }
 }
 </script>
+
+<style scoped>
+.discussions-container {
+  padding: 30px 10px;
+}
+
+.discussions-container > div {
+  margin: 0 0 15px 0;
+}
+</style>

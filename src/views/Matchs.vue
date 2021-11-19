@@ -3,7 +3,7 @@
     <ion-header>
     </ion-header>
     <ion-content :fullscreen="true">
-      <div id="loved-box">
+      <div class="page-box">
         <h1>Matchs</h1>
         <div class="loved-container">
           <MatchCard name='1nt3rn3t Gr4ndm4' profileImage='./assets/example/date-profile3.png'></MatchCard>
@@ -26,18 +26,6 @@ export default  {
 </script>
 
 <style scoped>
-#loved-box {
-  height: 100%;
-  max-width: 700px;
-  height: 100%;
-  margin: auto;
-  padding: 10px;
-}
-
-h1 {
-  margin: 0;
-}
-
 .loved-container {
   padding: 30px;
 }
