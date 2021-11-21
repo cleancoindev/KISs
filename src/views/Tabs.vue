@@ -4,19 +4,19 @@
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar class="bottom-tabsBar">
         <ion-tab-button tab="home" href="/tabs/home">
-          <ion-icon :icon="home" />
+          <ion-icon :src="icons.home"></ion-icon>
         </ion-tab-button>
           
         <ion-tab-button tab="chat" href="/tabs/chat">
-          <ion-icon :icon="chatbubbles" />
+          <ion-icon :src="icons.messages"></ion-icon>
         </ion-tab-button>
         
         <ion-tab-button tab="matchs" href="/tabs/matchs">
-          <ion-icon :icon="heart" />
+          <ion-icon :src="icons.heart" />
         </ion-tab-button>
         
         <ion-tab-button tab="profile" href="/tabs/profile">
-          <ion-icon :icon="person" />
+          <ion-icon :src="icons.user" />
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -25,17 +25,19 @@
 
 <script lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { chatbubbles, person, home, heart } from 'ionicons/icons';
+import { home, chatbubbles, heart, person } from 'ionicons/icons';
 
 export default {
   name: 'Tabs',
   components: {IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
   setup() {
     return {
-      chatbubbles, 
-      person, 
-      home,
-      heart,
+      icons: {
+        home: home,
+        messages: chatbubbles,
+        heart: heart,
+        user: person,
+      }
     }
   }
 }

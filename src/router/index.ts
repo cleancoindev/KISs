@@ -17,21 +17,26 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'home',
-        component: () => import('@/views/Home.vue')
+        component: () => import('@/views/tabs/Home.vue')
       },
       {
         path: 'chat',
-        component: () => import('@/views/Chat.vue')
+        component: () => import('@/views/tabs/Chat.vue')
       },
       {
         path: 'matchs',
-        component: () => import('@/views/Matchs.vue')
+        component: () => import('@/views/tabs/Matchs.vue')
       },
       {
         path: 'profile',
-        component: () => import('@/views/Profile.vue')
+        component: () => import('@/views/tabs/Profile.vue')
       }
     ]
+  },
+  {
+    path: '/chat/:id',
+    name: 'Chat',
+    component: () => import('@/views/Chat.vue')   
   }
 ]
 
@@ -40,4 +45,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;

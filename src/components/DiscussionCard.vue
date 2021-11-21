@@ -1,21 +1,27 @@
 <template>
-  <div id="container">
-      <div class="discussion-box">
-        <div class="left-container">
-            <div class="profile-pic" name="profile" :style="'background-image: url(' + profileImage + ');'"></div>
-            <div class="discussion-content">
-                <h4 class="user-name">{{ name }}</h4>
-                <span class="discussion-infos">Online 14 minutes ago</span>
+    <a href="/chat/12">
+        <div id="container">
+            <div class="discussion-box">
+                <div class="left-container">
+                    <div class="profile-pic" name="profile" :style="'background-image: url(' + profileImage + ');'"></div>
+                    <div class="discussion-content">
+                        <h4 class="user-name">{{ name }}</h4>
+                        <span class="discussion-infos">Online 14 minutes ago</span>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-  </div>
+    </a>
 </template>
 
 <script lang="ts">
+import {  } from '@ionic/vue';
+  import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
+export default defineComponent({
   name: 'CommingSoon',
+  components: {  },
   props: {
     profileImage: {
         type: String,
@@ -25,9 +31,16 @@ export default {
         type: String,
         required: true
     },
+    setup() {
+        const router = useRouter();
 
+        return {
+            id: 12,
+            router
+        }
+    }
   }
-}
+})
 </script>
 
 <style scoped>
@@ -90,5 +103,10 @@ h4 {
 .discussion-infos {
     font-size: 15px;
     color: #353535;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
 }
 </style>

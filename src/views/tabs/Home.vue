@@ -21,7 +21,7 @@ export default {
   data: () => ({
     logo: {
     'text': 'Logo',
-    'src': './assets/icon/icon-transparent.png'
+    'src': './assets/logo/icon-transparent.png'
     },
     showLess: true,
     cards: [
