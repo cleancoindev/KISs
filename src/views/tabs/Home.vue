@@ -3,7 +3,7 @@
     <ion-content :fullscreen="true">  
       <ion-img class="logoTop" :src="logo.src" ></ion-img>
       <div id="dating-card-container">
-        <DatingCard v-for="card in cards" :key="card" class="datingCard" ref="datingCard" :profileImage="card.profileImage" :name="card.name" :age="card.age"></DatingCard>
+        <DatingCard v-for="card in cards" :key="card" class="datingCard" :profileImage="card.profileImage" :name="card.name" :age="card.age"></DatingCard>
       </div>
     </ion-content>
   </ion-page>
@@ -23,7 +23,6 @@ export default {
     'text': 'Logo',
     'src': './assets/logo/icon-transparent.png'
     },
-    showLess: true,
     cards: [
       {name:'Andras', age:'63', profileImage:'./assets/example/date-profile.png'},
       {name:'1nt3rn3t Gr4ndm4', age:'89', profileImage:'./assets/example/date-profile3.png'},

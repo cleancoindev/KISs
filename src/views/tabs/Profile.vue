@@ -27,9 +27,9 @@ import { brush } from 'ionicons/icons';
 export default  {
   name: 'Profile',
   components: { IonHeader, IonContent, IonPage, IonIcon },
-  data: () => ({
+  setup: () => ({
     name: "Carl",
-    profileImage: "http://images4.fanpop.com/image/polls/664000/664497_1300312081691_full.jpg",
+    profileImage: "https://pbs.twimg.com/profile_images/1490434541/UP_CarlRelaxingInChair_fullsize.jpg",
     description: "I'm an old DnD player. I've 2 sons and 3 grandsons. I am an aviation enthusiast and drink a lot of detox water for my old kidneys.",
     brush
   })
