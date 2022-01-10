@@ -37,6 +37,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/chat/:id',
     name: 'Chat',
     component: () => import('@/views/Chat.vue')   
+  },
+  {
+    path: '/auth/login',
+    name: 'Login',
+    component: () => import('@/views/auth/Login.vue')
+  },
+  {
+    path: '/auth/signup',
+    name: 'Signup',
+    component: () => import('@/views/auth/Signup.vue')
   }
 ]
 

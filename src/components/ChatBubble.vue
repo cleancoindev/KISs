@@ -18,7 +18,7 @@
 <script>
 
 export default {
-  name: 'CommingSoon',
+  name: 'ChatBubble',
   props: {
     name: String,
     self: Boolean,
