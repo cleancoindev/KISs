@@ -1,8 +1,14 @@
 <template>
-    <div id="container" :name="name.toLowerCase()">
-        <ion-label class="name">{{ name }}</ion-label>
-        <ion-input :name="name.toLowerCase()" :type="type" :placeholder="name" :min="min" :max="max" required></ion-input>
-        <ion-label class="error">Error Message</ion-label>
+    <div id="container">
+        <ion-button @click="signup()" expand="block">Sign Up</ion-button>
+        <div class="link-to-other">
+            <ion-label>
+                Already have an account ?
+                <router-link to="/auth/login">
+                    <ion-label> Log In </ion-label>
+                </router-link>
+            </ion-label>
+        </div>
     </div>
 </template>
 

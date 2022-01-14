@@ -1,5 +1,5 @@
 <template>
-    <a href="/chat/12">
+    <router-link to="/chat/12">
         <div id="container">
             <div class="discussion-box">
                 <div class="left-container">
@@ -11,12 +11,11 @@
                 </div>
             </div>
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script lang="ts">
-import {  } from '@ionic/vue';
-  import { defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({

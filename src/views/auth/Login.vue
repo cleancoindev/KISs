@@ -6,14 +6,16 @@
       <div class="page-box">
         <h1>Log In</h1>
         <div class="logger-container">
-          <div id="inputs-container">
+          <div id="inputs-container" class="login">
             <AuthInput name="Email" type="text"></AuthInput>
             <AuthInput name="Password" type="password"></AuthInput>
-            <ion-button expand="block">Log In</ion-button>
+            <ion-button @click="login()" expand="block">Log In</ion-button>
             <div class="link-to-other">
               <ion-label>
                   Don't have account ?
-                  <a href="/auth/signup">Sign Up</a>
+                    <router-link to="/auth/signup">
+                      <ion-label> Sign Up </ion-label>
+                    </router-link>
               </ion-label>
             </div>
           </div>
@@ -27,10 +29,47 @@
 import { IonPage, IonHeader, IonContent, IonLabel, IonButton } from '@ionic/vue';
 import AuthInput from '@/components/auth/AuthInput.vue';
 
+import validator from 'validator';
+
 import '@/style/auth.css';
+import { getUser, matchPass } from '../../lib/fauna';
 
 export default ({
   name: 'Login',
-  components: { IonHeader, IonContent, IonPage, IonLabel, IonButton, AuthInput }
+  components: { IonHeader, IonContent, IonPage, IonLabel, IonButton, AuthInput },
+  methods: {
+    login() {
+      const inputs = document.querySelector('#inputs-container.login');
+
+      const email = inputs.querySelector("input[name='email']").value;
+      const password = validator.normalizeEmail(inputs.querySelector("input[name='password']").value);
+
+      if (!validator.isEmail(email)) {
+        inputs.querySelector("div[name='email']").classList.add("required");
+        inputs.querySelector("div[name='email'] > .error").innerHTML = "Please enter a valid email.";
+        return
+      } else {
+        inputs.querySelector("div[name='email']").classList.remove("required");
+      }
+
+      if (!validator.isLength(password, { min: 5, max: 32 })) {
+        inputs.querySelector("div[name='password']").classList.add("required");
+        inputs.querySelector("div[name='password'] > .error").innerHTML = "The username must be between 5 and 32 characters long.";
+        return
+      } else {
+        inputs.querySelector("div[name='password']").classList.remove("required");
+      }
+
+      getUser(email)
+      .then((user) => {
+        console.log(user);
+        if (user == null) return console.log("Incorrect email or password");
+        console.log(user.data);
+        console.log(user.data.password);
+        if (!matchPass(user.data.password, password)) return console.log("Incorrect email or password")
+        console.log("login");
+      })
+    }
+  }
 })
 </script>

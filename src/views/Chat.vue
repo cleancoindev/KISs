@@ -1,9 +1,9 @@
 <template>
   <ion-page>
     <ion-header>
-      <a href="/tabs/chat" class="goBack">
+      <router-link to="/tabs/chat" routerDirection="back" class="goBack">
         <ion-icon size="large" :src="icons.backArrow" class="goBack-icon"></ion-icon>
-      </a>
+      </router-link>
       <ion-item>
         <ion-avatar>
           <img :src="user.profilePic">
