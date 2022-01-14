@@ -32,7 +32,7 @@ import AuthInput from '@/components/auth/AuthInput.vue';
 import validator from 'validator';
 
 import '@/style/auth.css';
-import { getUser, matchPass } from '../../lib/fauna';
+import { identify } from '../../lib/fauna';
 
 export default ({
   name: 'Login',
@@ -60,14 +60,9 @@ export default ({
         inputs.querySelector("div[name='password']").classList.remove("required");
       }
 
-      getUser(email)
+      identify(email)
       .then((user) => {
-        console.log(user);
-        if (user == null) return console.log("Incorrect email or password");
-        console.log(user.data);
-        console.log(user.data.password);
-        if (!matchPass(user.data.password, password)) return console.log("Incorrect email or password")
-        console.log("login");
+        print(user)
       })
     }
   }

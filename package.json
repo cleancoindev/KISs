@@ -24,7 +24,6 @@
     "@upstash/redis": "^0.2.1",
     "aws-sdk": "^2.1053.0",
     "core-js": "^3.6.5",
-    "crypto-js": "^4.1.1",
     "dns": "^0.2.2",
     "dotenv": "^11.0.0",
     "faunadb": "^4.4.1",

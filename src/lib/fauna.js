@@ -1,5 +1,4 @@
 import faunadb from 'faunadb';
-import CryptoJS from 'crypto-js';
 
 const q = faunadb.query;
 
@@ -9,51 +8,70 @@ const client = new faunadb.Client({
 });
 
 
-const getUser = (email, password) => {
-    const userData = client.query(
-        q.Get(
-            q.Match(
-                q.Index("user_by_email"),
-                [email, password]
+const checkIdentify = () => {
+    return client.query(
+        q.HasCurrentIdentity()
+    )
+}
+
+const currentUser = () => {
+    return client.query(
+        q.CurrentIdentity()
+    )
+}
+
+const emailIsTaken = (email) => {
+    return client.query(
+        q.IsRef(
+            q.Select(
+                "ref",
+                q.Get(
+                    q.Match(
+                        q.Index("user_by_email"),
+                        email
+                        )
+                    )
+                )
             )
+    )
+}
+
+const identify = (email, password) => {
+    client.query(
+        q.Identify(
+            q.Select(
+                "ref",
+                q.Get(
+                    q.Match(
+                        q.Index("user_by_email"),
+                        email
+                        )
+                    )
+                ),
+            password
         )
     )
-    .catch((err) => {
-        if (err.requestResult.statusCode == 404) {
-            return null
-        }
-    })
-
-    return userData
 }
 
 const createUser =  (userName, email, password) => {
-    getUser(email) // Check if user already exsist
-    .then((data) => {
-        if (data != null) return
-
-        console.log("pass");
-
-        const hash = CryptoJS.SHA1(password).toString();
-    
-        client.query(
-            q.Create(q.Collection("users"), {
-                data: {
-                    username: userName,
-                    email: email,
-                    password: hash
-                }
-              })
-        )
-        .catch((err) => console.error('Error: %s', err))
+    emailIsTaken(email)
+    .then((resp) => {
+        if (resp) return
+        else {
+            client.query(
+                q.Create(q.Collection("users"), {
+                    credentials: {
+                        password: password
+                    },
+                    data: {
+                        username: userName,
+                        email: email
+                    }
+                })
+            )
+            .catch((err) => console.error('Error: %s', err))
+        }
     })
-
-}
-
-const matchPass = (hash, pass) => {
-    const password = CryptoJS.SHA1(pass).toString();
-
-    return hash == password;
 }
 
 
@@ -92,4 +110,4 @@ client.checkPass = (plainPass, passHash) => {
     return bcrypt.compare(plainPass, passHash);
 }
 */
-export { createUser, getUser, matchPass };
+export { createUser, identify, currentUser, checkIdentify };

@@ -33,6 +33,7 @@ npm-debug.log*
 android/
 ios/
 .env
+*.env
 
 # Envrionment Variables
 **/environment.*
