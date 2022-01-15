@@ -32,7 +32,7 @@ import AuthInput from '@/components/auth/AuthInput.vue';
 import validator from 'validator';
 
 import '@/style/auth.css';
-import { identify } from '../../lib/fauna';
+import { login } from '../../lib/fauna';
 
 export default ({
   name: 'Login',
@@ -42,7 +42,7 @@ export default ({
       const inputs = document.querySelector('#inputs-container.login');
 
       const email = inputs.querySelector("input[name='email']").value;
-      const password = validator.normalizeEmail(inputs.querySelector("input[name='password']").value);
+      const password = inputs.querySelector("input[name='password']").value;
 
       if (!validator.isEmail(email)) {
         inputs.querySelector("div[name='email']").classList.add("required");
@@ -60,9 +60,13 @@ export default ({
         inputs.querySelector("div[name='password']").classList.remove("required");
       }
 
-      identify(email)
+      login(email, password)
       .then((user) => {
-        print(user)
+        console.log(user)
+      })
+      .catch((reason) => {
+        if (reason.message == 'authentication failed')
+          console.log("Invalid email or password");
       })
     }
   }

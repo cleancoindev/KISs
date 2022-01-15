@@ -45,9 +45,6 @@ export default ({
       const username = inputs.querySelector("input[name='username']").value;
       const email = inputs.querySelector("input[name='email']").value;
       const password = inputs.querySelector("input[name='password']").value;
-      console.log(username);
-      console.log(email);
-      console.log(password);
 
       if (!validator.isLength(username, { min: 5, max: 16 })) {
         inputs.querySelector("div[name='username']").classList.add("required");
