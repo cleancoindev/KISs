@@ -66,6 +66,7 @@ export default ({
         const localStorage = new Storage()
         localStorage.create();
         localStorage.set("userRef", user)
+        this.$router.push('/');
       })
       .catch((reason) => {
         if (reason.message == 'authentication failed')

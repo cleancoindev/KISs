@@ -71,6 +71,9 @@ export default ({
       }
 
       createUser(username, email, password)
+      .then(() => {
+          this.$router.push('/auth/login');
+      })
     }
   }
 })
