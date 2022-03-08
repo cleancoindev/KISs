@@ -25,13 +25,15 @@ import { IonPage, IonHeader, IonContent, IonIcon } from '@ionic/vue';
 import { brush } from 'ionicons/icons';
 import { Storage } from "@ionic/storage";
 
+import { getUser } from '../../lib/fauna';
+
 export default  {
   name: 'Profile',
   components: { IonHeader, IonContent, IonPage, IonIcon },
   data() {
     this.setInfos()
     return {
-      username: "Loading",
+      username: "Username",
       profileImage: "https://pbs.twimg.com/profile_images/1490434541/UP_CarlRelaxingInChair_fullsize.jpg",
       description: "No description.",
       brush
@@ -44,6 +46,16 @@ export default  {
       
       localStorage.get("user")
       .then((user) => {
+        if (!user) {
+          localStorage.get("userRef")
+          .then((dataRef) => {
+            getUser(dataRef.instance.value.id)
+            .then((data) => {
+              localStorage.set("user", data)
+              this.setInfos()
+            })
+          })
+        }
         this.username = user.data.username
         this.description = user.data.description
       })
