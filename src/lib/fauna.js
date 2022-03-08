@@ -77,4 +77,12 @@ const createUser = (userName, email, password) => {
     })
 }
 
-export { createUser, login, logout, currentUser, checkIdentify };
+const getUser = (ref) => {
+    return client.query(
+        q.Get(
+            q.Ref(q.Collection("users"), ref)
+            )
+    )
+}
+
+export { createUser, login, logout, currentUser, checkIdentify, getUser };

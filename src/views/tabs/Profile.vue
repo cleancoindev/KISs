@@ -12,7 +12,7 @@
               <ion-icon class="edit-icon" :src="brush"></ion-icon>
             </button>
           </div>
-          <h2>{{ name }}</h2>
+          <h2>{{ username }}</h2>
           <p class="description">{{ description }}</p>
         </div>
       </div>
@@ -20,19 +20,48 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { IonPage, IonHeader, IonContent, IonIcon } from '@ionic/vue';
 import { brush } from 'ionicons/icons';
+import { Storage } from "@ionic/storage";
 
 export default  {
   name: 'Profile',
   components: { IonHeader, IonContent, IonPage, IonIcon },
-  setup: () => ({
-    name: "Carl",
-    profileImage: "https://pbs.twimg.com/profile_images/1490434541/UP_CarlRelaxingInChair_fullsize.jpg",
-    description: "I'm an old DnD player. I've 2 sons and 3 grandsons. I am an aviation enthusiast and drink a lot of detox water for my old kidneys.",
-    brush
-  })
+  data() {
+    const localStorage = new Storage()
+    localStorage.create()
+    this.setUsername()
+    return {
+      localStorage: localStorage,
+      username: "Loading",
+      profileImage: "https://pbs.twimg.com/profile_images/1490434541/UP_CarlRelaxingInChair_fullsize.jpg",
+      description: "No description.",
+      brush
+    }
+  },
+  methods: {
+    setUsername() {
+      const localStorage = new Storage()
+      localStorage.create()
+      
+      localStorage.get("user")
+      .then((user) => {
+        this.username = user.data.username
+        this.description = user.data.description
+        console.log(user.data.description);
+      })
+    },
+    async getLocalStorage(index) {
+      await this.localStorage.get(index);
+    },
+    async removeLocalStorage(index) {
+      await this.localStorage.remove(index);
+    },
+    async clearLocalStorage() {
+      await this.localStorage.clear();
+    }
+  }
 }
 </script>
 

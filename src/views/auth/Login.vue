@@ -28,6 +28,7 @@
 <script>
 import { IonPage, IonHeader, IonContent, IonLabel, IonButton } from '@ionic/vue';
 import AuthInput from '@/components/auth/AuthInput.vue';
+import { Storage } from "@ionic/storage";
 
 import validator from 'validator';
 
@@ -62,7 +63,9 @@ export default ({
 
       login(email, password)
       .then((user) => {
-        console.log(user)
+        const localStorage = new Storage()
+        localStorage.create();
+        localStorage.set("userRef", user)
       })
       .catch((reason) => {
         if (reason.message == 'authentication failed')
