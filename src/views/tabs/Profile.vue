@@ -29,11 +29,8 @@ export default  {
   name: 'Profile',
   components: { IonHeader, IonContent, IonPage, IonIcon },
   data() {
-    const localStorage = new Storage()
-    localStorage.create()
-    this.setUsername()
+    this.setInfos()
     return {
-      localStorage: localStorage,
       username: "Loading",
       profileImage: "https://pbs.twimg.com/profile_images/1490434541/UP_CarlRelaxingInChair_fullsize.jpg",
       description: "No description.",
@@ -41,7 +38,7 @@ export default  {
     }
   },
   methods: {
-    setUsername() {
+    setInfos() {
       const localStorage = new Storage()
       localStorage.create()
       
@@ -49,17 +46,7 @@ export default  {
       .then((user) => {
         this.username = user.data.username
         this.description = user.data.description
-        console.log(user.data.description);
       })
-    },
-    async getLocalStorage(index) {
-      await this.localStorage.get(index);
-    },
-    async removeLocalStorage(index) {
-      await this.localStorage.remove(index);
-    },
-    async clearLocalStorage() {
-      await this.localStorage.clear();
     }
   }
 }
