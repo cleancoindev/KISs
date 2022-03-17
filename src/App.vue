@@ -22,11 +22,13 @@ export default defineComponent({
     localStorage.create()
     localStorage.get("userRef")
     .then((dataRef) => {
+      if (!dataRef) {
+        this.$router.push('/auth/login');
+      }
       getUser(dataRef.instance.value.id)
       .then((data) => {
         localStorage.set("user", data)
       })
-      
     })
   }
 });
